@@ -18,13 +18,13 @@ def run(mix_json_path,quant_json_path,target_json_path):
             continue
 
     with open(target_json_path,"w") as f:
-        json.dump(output_datas,f)
+        json.dump(output_datas, f, indent=2)
     print(f"Finish. Save json to {target_json_path}.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
     parser.add_argument('--mix_json_path', default='/mnt/cephfs/home/lyy/amct/code/output_mix/output_mix1_qat_mixed_precision.json', type=str)
     parser.add_argument('--quant_json_path', default='/mnt/cephfs/home/lyy/amct/amct_torch_samples/resnet-101/outputs/calibration/tmp/config.json', type=str)
-    parser.add_argument('--target_json_path', type=str, default='/mnt/cephfs/home/lyy/amct/code/mix_quant.json')
+    parser.add_argument('--target_json_path', type=str, default='/mnt/cephfs/home/lyy/amct/amct_torch_samples/resnet-101/outputs/calibration/tmp/mix_quant.json')
     args = parser.parse_args()
     run(mix_json_path=args.mix_json_path,quant_json_path=args.quant_json_path,target_json_path=args.target_json_path)

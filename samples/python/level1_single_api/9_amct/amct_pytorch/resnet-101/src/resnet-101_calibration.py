@@ -141,19 +141,20 @@ def main():
     # Quantize configurations
     args_shape = [(1, 3, 224, 224)]
     input_data = tuple([torch.randn(arg_shape) for arg_shape in args_shape]) # pylint: disable=E1101
+    print(input_data[0].shape)
     if torch.cuda.is_available():
         input_data = tuple([data.to('cuda') for data in input_data])
         model.to('cuda')
-    config_json_file = os.path.join(TMP, 'config.json')
+    config_json_file = os.path.join(TMP, 'mix_quant.json')
     skip_layers = []
     batch_num = 2
 
-    if ARGS.nuq:
-        config_defination = os.path.join(PATH, 'src/nuq_conf/nuq_quant.cfg')
-        amct.create_quant_config(
-            config_json_file, model, input_data, skip_layers, batch_num, config_defination=config_defination)
-    else:
-        amct.create_quant_config(config_json_file, model, input_data, skip_layers, batch_num)
+    # if ARGS.nuq:
+    #     config_defination = os.path.join(PATH, 'src/nuq_conf/nuq_quant.cfg')
+    #     amct.create_quant_config(
+    #         config_json_file, model, input_data, skip_layers, batch_num, config_defination=config_defination)
+    # else:
+    #     amct.create_quant_config(config_json_file, model, input_data, skip_layers, batch_num)
 
     # Phase1: do conv+bn fusion, weights calibration and generate
     #         calibration model
